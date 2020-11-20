@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="movieResult"
+            type="com.themoviedb.ui.fragment.movielist.model.MovieResults" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvGenre"
+                style="@style/textView"
+                android:layout_width="0dp"
+                android:maxLines="3"
+                android:text="@string/medium_dummy_text"
+                android:textSize="@dimen/default_textsize"
+                app:layout_constraintEnd_toStartOf="@+id/llUserScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRuntime"
+                style="@style/textView"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/extra_small_margin"
+                android:maxLines="3"
+                android:text="@string/medium_dummy_text"
+                android:textSize="@dimen/default_textsize"
+                app:layout_constraintEnd_toStartOf="@+id/llUserScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llUserScore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRuntime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvGenre">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/lblUserScore"
+                    style="@style/textView"
+                    android:fontFamily="@font/dm_serif_display_regular"
+                    android:text="@string/lbl_user_score"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/large_textsize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvVoteCount"
+                    style="@style/withAlphaTextView"
+                    android:layout_marginStart="@dimen/tiny_small_margin"
+                    android:text="@{String.valueOf(movieResult.voteAverage).concat(`%`)}"
+                    android:textSize="@dimen/default_textsize"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ivHeart"
+                    app:layout_constraintTop_toBottomOf="@+id/lblUserScore" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivHeart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_heart"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvVoteCount"
+                    app:layout_constraintEnd_toStartOf="@+id/tvVoteCount"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvVoteCount" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lblOverview"
+                style="@style/textView"
+                android:layout_marginTop="@dimen/default_margin"
+                android:fontFamily="@font/dm_serif_display_regular"
+                android:text="@string/lbl_overview"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/heading_textsize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRuntime" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOverview"
+                style="@style/textView"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/small_margin"
+                android:ellipsize="end"
+                android:maxLines="6"
+                android:text="@{movieResult.overview}"
+                android:textSize="@dimen/default_textsize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblOverview" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lblCast"
+                style="@style/textView"
+                android:layout_marginTop="@dimen/default_margin"
+                android:fontFamily="@font/dm_serif_display_regular"
+                android:text="@string/lbl_cast"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/heading_textsize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/lblCast" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lblProduction"
+                style="@style/textView"
+                android:layout_marginTop="@dimen/default_margin"
+                android:fontFamily="@font/dm_serif_display_regular"
+                android:text="@string/lbl_production"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/heading_textsize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvCast" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/lblProduction" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lblReview"
+                style="@style/textView"
+                android:layout_marginTop="@dimen/default_margin"
+                android:fontFamily="@font/dm_serif_display_regular"
+                android:text="@string/lbl_reviews"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/heading_textsize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvProduction" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivMoreReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/lblReview"
+                android:padding="@dimen/small_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lblReview" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llReviewBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded"
+                android:backgroundTint="@color/lite_blue_shade"
+                android:padding="@dimen/small_padding"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblReview">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivQuote"
+                    android:layout_width="@dimen/small_image"
+                    android:layout_height="@dimen/small_image"
+                    android:src="@drawable/ic_double_quotes"
+                    android:tint="@color/grey"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvReview"
+                    style="@style/textView"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="@string/extra_large_dummy_text"
+                    android:textSize="@dimen/default_textsize"
+                    app:layout_constraintEnd_toStartOf="@+id/tvReviewerImage"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivQuote" />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/tvReviewerImage"
+                    android:layout_width="@dimen/large_image"
+                    android:layout_height="@dimen/large_image"
+                    android:src="@drawable/tools_user_profile"
+                    app:civ_border_color="#FF000000"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvReview" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lblSimilarMovies"
+                style="@style/textView"
+                android:layout_marginTop="@dimen/default_margin"
+                android:fontFamily="@font/dm_serif_display_regular"
+                android:text="@string/lbl_similar_movies"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/heading_textsize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llReviewBox" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rSimilarMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/lblSimilarMovies" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

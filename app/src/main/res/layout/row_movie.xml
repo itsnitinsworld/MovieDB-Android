@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.themoviedb.ui.fragment.movielist.model.MovieResults" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_large"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:backgroundTint="@color/lite_blue_shade"
+        android:padding="@dimen/small_padding">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBanner"
+            android:layout_width="120dp"
+            android:layout_height="170dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/tools_movie_banner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <RatingBar
+            android:id="@+id/rating"
+            style="@style/RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:numStars="5"
+            android:stepSize="1"
+            app:layout_constraintStart_toEndOf="@+id/ivBanner"
+            app:layout_constraintTop_toTopOf="@+id/ivBanner" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvReviewCount"
+            style="@style/withAlphaTextView"
+            android:layout_marginStart="@dimen/tiny_small_margin"
+            android:text="@{String.valueOf(model.voteCount)}"
+            android:textSize="@dimen/small_textsize"
+            app:layout_constraintBottom_toBottomOf="@id/rating"
+            app:layout_constraintStart_toEndOf="@+id/rating"
+            app:layout_constraintTop_toTopOf="@+id/rating" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/withAlphaTextView"
+            android:text="@{model.releaseDate}"
+            android:textSize="@dimen/small_textsize"
+            app:layout_constraintBottom_toBottomOf="@id/rating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rating" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            style="@style/textView"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:fontFamily="@font/dm_serif_display_regular"
+            android:text="@{model.title}"
+            android:textSize="@dimen/large_textsize"
+            app:layout_constraintStart_toEndOf="@+id/ivBanner"
+            app:layout_constraintTop_toBottomOf="@+id/rating" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            style="@style/withAlphaTextView"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/extra_small_margin"
+            android:maxLines="4"
+            android:text="@{model.overview}"
+            android:textSize="@dimen/small_textsize"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@+id/ivBanner"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBookNow"
+            style="@style/defaultBtnSmallStyle"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/btn_book_now"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_textsize"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBanner"
+            app:layout_constraintStart_toEndOf="@+id/ivBanner"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

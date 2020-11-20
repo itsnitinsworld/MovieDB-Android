@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFF</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#1A73E9</color>
+
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey">#C4C4C4</color>
+    <color name="grey_lite">#B5C4C4C4</color>
+    <color name="blue">#3F51B5</color>
+    <color name="lite_blue_shade">#F8FCFA</color>
+
+
+    <color name="app_background">@color/white</color>
+    <color name="app_black">#373e43</color>
+    <color name="app_black_alpha_70">#B3373E43</color>
+    <color name="app_black_alpha_50">#80373E43</color>
+    <color name="app_black_background">#4B4B4B</color>
+
+
+    <color name="bg_edit_text_grey">#F6F6F6</color>
+    <color name="bg_error_red">#FF9494</color>
+    <color name="bg_success_green">#883BBC7C</color>
+    <color name="bg_card_grey">#FAFAFA</color>
+    <color name="dividerColor">#E7EDF1</color>
+
+    <color name="btnBgColorRed">#ED1C24</color>
+    <color name="btnBgColorGrey">#4c5156</color>
+
+</resources>

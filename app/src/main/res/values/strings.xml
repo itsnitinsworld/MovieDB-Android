@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">TMDB</string>
+
+    <string name="tag_line">Millions of movies, TV shows and people to discover. Explore now.</string>
+
+    <string name="lbl_intro_1">Tired of\n<b>fake forwards?</b></string>
+    <string name="des_intro_1">Shore will allows you to discover the facts in real-time with no-extra efforts.</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="skip">Skip</string>
+    <string name="lbl_intro_2">Read\n<b>Facts, Not Fakes </b></string>
+    <string name="des_intro_2">Wrong information results as weak arguments in debates, Read facts and put better arguments</string>
+    <string name="lbl_intro_3">Share\n<b>Facts, Not Fakes </b></string>
+    <string name="des_intro_3">Don\'t blindly trust on your friend. Who knows he has done it on someone else.</string>
+    <string name="lbl_intro_4">We respect\n<b>your privacy</b></string>
+    <string name="des_intro_4">We don\'t collect your personal information. We serve to make a better future for us.</string>
+
+    <string name="extra_large_dummy_text">What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry. \n\nWhat is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry. \nWhat is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry. \n\nWhat is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry.</string>
+    <string name="large_dummy_text">What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry.</string>
+    <string name="small_dummy_text">Lorem Ipsum</string>
+    <string name="tiny_dummy_text">Lorem</string>
+    <string name="medium_dummy_text">What is Lorem Ipsum Lorem Ipsum is simply dummy text?</string>
+    <string name="dummy_email">htts://www.example.com</string>
+    <string name="dummy_number">72</string>
+
+    <string name="btn_book_now">Book Now</string>
+    
+    <string name="lbl_user_score">User Score</string>
+    <string name="lbl_overview">Overview</string>
+    <string name="lbl_cast">Cast</string>
+    <string name="lbl_production">Production</string>
+    <string name="lbl_similar_movies">Similar Movies</string>
+    <string name="lbl_reviews">Reviews</string>
+
+
+</resources>

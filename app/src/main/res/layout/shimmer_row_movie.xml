@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.themoviedb.ui.fragment.movielist.model.MovieResults" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:background="@drawable/bg_rounded_large"
+        android:backgroundTint="@color/lite_blue_shade"
+        android:padding="@dimen/small_padding">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBanner"
+            android:layout_width="120dp"
+            android:layout_height="170dp"
+            android:background="@color/grey_lite"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <RatingBar
+            android:id="@+id/rating"
+            style="@style/RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_margin"
+            android:numStars="5"
+            android:stepSize="1"
+            app:layout_constraintStart_toEndOf="@+id/ivBanner"
+            app:layout_constraintTop_toTopOf="@+id/ivBanner" />
+
+        <View
+            android:id="@+id/tvReviewCount"
+            android:layout_width="30dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="@dimen/tiny_small_margin"
+            android:background="@color/grey_lite"
+            app:layout_constraintBottom_toBottomOf="@id/rating"
+            app:layout_constraintStart_toEndOf="@+id/rating"
+            app:layout_constraintTop_toTopOf="@+id/rating" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="8dp"
+            android:background="@color/grey_lite"
+            app:layout_constraintBottom_toBottomOf="@id/rating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rating" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="200dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:background="@color/grey_lite"
+            app:layout_constraintStart_toEndOf="@+id/ivBanner"
+            app:layout_constraintTop_toBottomOf="@+id/rating" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/view">
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:background="@color/grey_lite" />
+            <View
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="@dimen/extra_small_margin"
+                android:background="@color/grey_lite" />
+            <View
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="@dimen/extra_small_margin"
+                android:background="@color/grey_lite" />
+            <View
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="@dimen/extra_small_margin"
+                android:background="@color/grey_lite" />
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="10dp"
+                android:layout_marginTop="@dimen/extra_small_margin"
+                android:background="@color/grey_lite" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/btnBookNow"
+            style="@style/defaultBtnSmallStyle"
+            android:layout_width="100dp"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:backgroundTint="@color/grey_lite"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBanner"
+            app:layout_constraintStart_toEndOf="@+id/ivBanner" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

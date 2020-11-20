@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_background"
+        android:fitsSystemWindows="false"
+        android:orientation="vertical">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:fitsSystemWindows="true"
+            app:layout_constraintBottom_toTopOf="@+id/frameLayout" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingTop="@dimen/large_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingBottom="@dimen/large_padding"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGetStarted"
+                style="@style/defaultBtnStyle"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/extreme_large_margin"
+                android:layout_marginEnd="@dimen/extreme_large_margin"
+                android:background="@drawable/bg_rounded"
+                android:backgroundTint="@color/colorAccent"
+                android:text="@string/btn_get_started"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivLeft"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:background="@drawable/bg_large_rounded"
+                android:backgroundTint="@color/colorAccent"
+                android:padding="@dimen/small_padding"
+                android:src="@drawable/ic_left_arrow"
+                android:tint="@color/white"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivRight"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/bg_large_rounded"
+                android:backgroundTint="@color/colorAccent"
+                android:padding="@dimen/small_padding"
+                android:src="@drawable/ic_right_arrow"
+                android:tint="@color/white" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

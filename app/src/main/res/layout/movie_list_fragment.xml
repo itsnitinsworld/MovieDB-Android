@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <include
+                        layout="@layout/shimmer_row_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <include
+                        layout="@layout/shimmer_row_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <include
+                        layout="@layout/shimmer_row_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <include
+                        layout="@layout/shimmer_row_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <include
+                        layout="@layout/shimmer_row_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <include
+                        layout="@layout/shimmer_row_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <include
+                        layout="@layout/shimmer_row_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <include
+                        layout="@layout/shimmer_row_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/row_movie" />
+
+                <FrameLayout
+                    android:id="@+id/llNoData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!--        <androidx.appcompat.widget.AppCompatImageView-->
+                    <!--            android:id="@+id/imageView"-->
+                    <!--            android:layout_width="wrap_content"-->
+                    <!--            tools:visibility="visible"-->
+                    <!--            android:layout_height="320dp"-->
+                    <!--            app:layout_constraintBottom_toTopOf="@+id/tvConfused"-->
+                    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--            app:srcCompat="@drawable/ic_no_data" />-->
+
+
+                    <!--        <androidx.appcompat.widget.AppCompatTextView-->
+                    <!--            style="@style/textView"-->
+                    <!--            android:layout_width="wrap_content"-->
+                    <!--            android:layout_height="wrap_content"-->
+                    <!--            android:layout_gravity="bottom|center_horizontal"-->
+                    <!--            android:paddingBottom="@dimen/small_margin"-->
+                    <!--            android:text="@string/txt_no_data"-->
+                    <!--            android:textSize="@dimen/large_textsize" />-->
+                </FrameLayout>
+
+            </FrameLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</layout>
