@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.themoviedb.base.BaseViewModel
 import com.themoviedb.model.MovieResults
-import com.themoviedb.utils.AppConstants
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -16,6 +15,10 @@ class MovieListViewModel : BaseViewModel() {
 
     private val _isViewLoading = MutableLiveData<Boolean>()
     val isViewLoading: LiveData<Boolean> = _isViewLoading
+
+
+    private val _isEmptyList = MutableLiveData<Boolean>()
+    val isEmptyList: LiveData<Boolean> = _isEmptyList
 
     private val _onMessageError = MutableLiveData<String>()
     val onMessageError: LiveData<String> = _onMessageError
@@ -42,12 +45,18 @@ class MovieListViewModel : BaseViewModel() {
 
             override fun onSuccess(t: List<MovieResults>?) {
                 _isViewLoading.value = false
-                _moviesList.value = t ?: emptyList()
+                if (t.isNullOrEmpty()) {
+                    _isEmptyList.value = true
+                    return
+                }
+
+                _isEmptyList.value = false
+                _moviesList.value = t
             }
 
         }
 
-        apiInterface.moviesList(AppConstants.MovieDB.API_KEY)!!
+        apiInterface.moviesList!!
             .map {
                 it.results
             }

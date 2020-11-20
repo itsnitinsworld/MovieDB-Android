@@ -1,5 +1,6 @@
 package com.themoviedb.network
 
+import com.themoviedb.BuildConfig
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -34,12 +35,11 @@ class APIClient {
             val loggingInterceptor = HttpLoggingInterceptor()
                 .setLevel(HttpLoggingInterceptor.Level.BODY)
 
-            //TODO: check, Why this is not working?
             val networkInterceptor = Interceptor { chain ->
                 var request = chain.request()
                 val url =
                     request.url.newBuilder()
-                        .addQueryParameter("api_key", "4c065e562519ef8755b6f816a9b81e67").build()
+                        .addQueryParameter("api_key", BuildConfig.MOVIEDB_API_KEY).build()
                 request = request.newBuilder().url(url).build()
                 chain.proceed(request)
             }

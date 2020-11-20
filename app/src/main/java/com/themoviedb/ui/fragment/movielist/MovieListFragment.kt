@@ -16,6 +16,7 @@ import com.themoviedb.base.BaseFragment
 import com.themoviedb.databinding.MovieListFragmentBinding
 import com.themoviedb.model.MovieResults
 import com.themoviedb.ui.MainActivity
+import com.themoviedb.utils.extensions.makeVisible
 import kotlinx.android.synthetic.main.movie_list_fragment.*
 
 class MovieListFragment : BaseFragment() {
@@ -29,11 +30,6 @@ class MovieListFragment : BaseFragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.movie_list_fragment, container, false)
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        retainInstance = true
     }
 
 
@@ -64,6 +60,7 @@ class MovieListFragment : BaseFragment() {
 
         viewModel.isViewLoading.observe(viewLifecycleOwner, Observer {
             swipeRefresh.isRefreshing = it
+            binding.shimmerContainer.makeVisible(it)
             if (it)
                 binding.shimmerContainer.startShimmer()
             else binding.shimmerContainer.stopShimmer()
@@ -74,7 +71,12 @@ class MovieListFragment : BaseFragment() {
         })
 
         viewModel.onMessageError.observe(viewLifecycleOwner, Observer {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+        })
+
+
+        viewModel.isEmptyList.observe(viewLifecycleOwner, Observer {
+            binding.ivNoData.makeVisible(it)
         })
     }
 

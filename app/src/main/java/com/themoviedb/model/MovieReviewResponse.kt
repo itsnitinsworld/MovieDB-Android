@@ -29,13 +29,13 @@ data class MovieReviewResponse(
 @JsonClass(generateAdapter = true)
 data class AuthorDetails(
     @Json(name = "avatar_path")
-    val avatarPath: String,
+    val avatarPath: String?,
     @Json(name = "name")
     val name: String,
     @Json(name = "rating")
     val rating: Int?,
     @Json(name = "username")
-    val username: String
+    val username: String?
 ) : Parcelable
 
 @SuppressLint("ParcelCreator")
@@ -49,11 +49,11 @@ data class MovieReviewResult(
     @Json(name = "content")
     val content: String,
     @Json(name = "created_at")
-    val createdAt: String,
+    val createdAt: String?,
     @Json(name = "id")
     val id: String,
     @Json(name = "updated_at")
-    val updatedAt: String,
+    val updatedAt: String?,
     @Json(name = "url")
-    val url: String
+    val url: String?
 ) : Parcelable

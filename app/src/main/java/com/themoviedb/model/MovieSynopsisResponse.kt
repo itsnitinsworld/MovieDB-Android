@@ -7,6 +7,7 @@ import android.os.Parcelable
 import androidx.annotation.RequiresApi
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.themoviedb.utils.StringUtils
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -17,7 +18,7 @@ data class MovieSynopsisResponse(
     @Json(name = "adult")
     val adult: Boolean,
     @Json(name = "backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @Json(name = "budget")
     val budget: Int,
     @Json(name = "genres")
@@ -88,6 +89,16 @@ data class MovieSynopsisResponse(
         val hour: Float = runtime.toFloat() / 60
         return String.format("%.2f", hour)
     }
+
+    fun getBudgetString(): String {
+        return if (budget != 0) StringUtils.getCurrency(budget.toFloat()) else "NA"
+    }
+
+
+    fun getRevenueString(): String {
+        return if (revenue != 0L) StringUtils.getCurrency(revenue.toFloat()) else "NA"
+    }
+
 }
 
 

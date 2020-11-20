@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,8 +22,10 @@ import com.themoviedb.adapter.ProductionAdapter
 import com.themoviedb.adapter.SimilarMoviesAdapter
 import com.themoviedb.base.BaseFragment
 import com.themoviedb.databinding.MovieDetailFragmentBinding
+import com.themoviedb.dialog.ReviewsBottomDialogFragment
 import com.themoviedb.model.MovieCast
 import com.themoviedb.model.MovieResults
+import com.themoviedb.model.MovieReviewResult
 import com.themoviedb.model.ProductionCompany
 import com.themoviedb.ui.MainActivity
 import com.themoviedb.ui.fragment.moviedetail.MovieDetailFragmentArgs.fromBundle
@@ -37,6 +40,10 @@ class MovieDetailFragment : BaseFragment() {
     private var mCastAdapter: CastListAdapter? = null
     private var mSimilarMoviesAdapter: SimilarMoviesAdapter? = null
     private var mProductionAdapter: ProductionAdapter? = null
+
+    private val llReviewBox: ConstraintLayout by lazy {
+        binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
+    }
 
     private val movieResults: MovieResults by lazy {
         fromBundle(requireArguments()).movieResult
@@ -59,6 +66,7 @@ class MovieDetailFragment : BaseFragment() {
     override fun onPageRefreshListener(data: Bundle?) {
         (mContext as MainActivity).setToolbar(binding.toolbar)
         (mContext as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.collpasingToolbar.title = movieResults.title
     }
 
     override fun initViewModel() {
@@ -66,10 +74,26 @@ class MovieDetailFragment : BaseFragment() {
     }
 
     override fun initListeners() {
-        binding.collpasingToolbar.title = movieResults.title
         binding.movieResult = movieResults
         binding.ivMovieBanner.loadImage(movieResults.posterPath)
 
+        binding.llMovieDetailContent.findViewById<AppCompatImageView>(R.id.ivMoreReview)
+            .setOnClickListener {
+                ReviewsBottomDialogFragment.newInstance(viewModel.movieDetailsMode.value?.movieReviews as ArrayList<MovieReviewResult>)
+                    .show(requireActivity().supportFragmentManager, tag)
+            }
+
+
+        val lblMoreLess = llReviewBox.findViewById<AppCompatTextView>(R.id.lblMoreLess)
+        lblMoreLess.tag = false
+        lblMoreLess.setOnClickListener {
+            val isMore = it.tag as Boolean
+            llReviewBox.findViewById<AppCompatTextView>(R.id.tvReview).maxLines =
+                if (isMore) 7 else Int.MAX_VALUE
+            lblMoreLess.text =
+                if (isMore) it.context.getString(R.string.lbl_more) else it.context.getString(R.string.lbl_less)
+            lblMoreLess.tag = !isMore
+        }
 
         initRecyclerViews()
     }
@@ -130,38 +154,65 @@ class MovieDetailFragment : BaseFragment() {
         viewModel.movieDetailsMode.observe(viewLifecycleOwner, Observer {
             binding.movieDetailModel = it
             if (!it.movieReviews.isNullOrEmpty()) {
-                binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.tvReview).text =
+                llReviewBox.findViewById<AppCompatTextView>(R.id.tvReview).text =
                     it.movieReviews.first().content
 
-                binding.llMovieDetailContent.findViewById<AppCompatImageView>(R.id.ivReviewerImage)
+                llReviewBox.findViewById<AppCompatImageView>(R.id.ivReviewerImage)
                     .loadImage(
                         it.movieReviews.first().authorDetails?.avatarPath
                     )
             }
 
-
-            binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
-                .makeVisible(!it.movieReviews.isNullOrEmpty())
-
             mCastAdapter?.addAll(it.movieCast)
-            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblCast)
-                .makeVisible(it.movieCast.isNotEmpty())
-
             mProductionAdapter?.addAll(it.movieSynopsis?.productionCompanies ?: emptyList())
-            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblProduction)
-                .makeVisible((it.movieSynopsis?.productionCompanies ?: emptyList()).isNotEmpty())
-
             mSimilarMoviesAdapter?.addAll(it.similarMoviesResult)
-            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblSimilarMovies)
-                .makeVisible(it.similarMoviesResult.isNotEmpty())
-
-
         })
 
         viewModel.onMessageError.observe(viewLifecycleOwner, Observer {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         })
-    }
 
+        viewModel.isEmptyCastList.observe(viewLifecycleOwner, Observer {
+            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblCast)
+                .makeVisible(!it)
+        })
+
+        viewModel.isEmptySimilarMoviesList.observe(viewLifecycleOwner, Observer {
+            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblSimilarMovies)
+                .makeVisible(!it)
+        })
+
+        viewModel.isEmptyProductionList.observe(viewLifecycleOwner, Observer {
+            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblProduction)
+                .makeVisible(!it)
+        })
+
+        viewModel.isEmptyReviewsList.observe(viewLifecycleOwner, Observer {
+            llReviewBox.makeVisible(!it)
+            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblReview)
+                .makeVisible(!it)
+            binding.llMovieDetailContent.findViewById<AppCompatImageView>(R.id.ivMoreReview)
+                .makeVisible(!it)
+        })
+
+        viewModel.isFinancialNegative.observe(viewLifecycleOwner, Observer {
+            binding.llMovieDetailContent.findViewById<AppCompatImageView>(R.id.ivProfitLoss).apply {
+                if (it) {
+                    loadImage(R.drawable.ic_loss)
+                    setColorFilter(
+                        ContextCompat.getColor(context, R.color.red),
+                        android.graphics.PorterDuff.Mode.SRC_IN
+                    )
+                } else {
+                    loadImage(R.drawable.ic_profit)
+                    setColorFilter(
+                        ContextCompat.getColor(context, R.color.green),
+                        android.graphics.PorterDuff.Mode.SRC_IN
+                    )
+                }
+            }
+
+        })
+    }
 
 }

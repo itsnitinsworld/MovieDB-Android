@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.themoviedb.base.BaseViewModel
 
 class IntroScreenViewModel : BaseViewModel() {
-    var _currentTab = MutableLiveData<Int>().apply { value = 0 }
-    var currentTab:LiveData<Int> = _currentTab
+    var currentTab = MutableLiveData<Int>().apply { value = 0 }
 
 }

@@ -43,16 +43,12 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
                 binding.ivLeft.makeVisibleWithAnimation(isVisible = false)
                 binding.ivRight.makeVisibleWithAnimation(isVisible = false)
                 binding.btnGetStarted.makeVisibleWithAnimation(isVisible = it + 1 == pagerAdapter.count)
-//                    binding.lllogoHeaderSkip.makeVisibleWithAnimation(isVisible = false)
-//                    binding.llLogoView.makeVisibleWithAnimation(isVisible = true)
                 return@Observer
             }
 
             binding.ivRight.makeVisibleWithAnimation(isVisible = it + 1 != pagerAdapter.count)
             binding.ivLeft.makeVisibleWithAnimation(isVisible = it != 0)
             binding.btnGetStarted.makeVisibleWithAnimation(isVisible = false)
-//                binding.lllogoHeaderSkip.makeVisibleWithAnimation(isVisible = true)
-//                binding.llLogoView.makeVisibleWithAnimation(isVisible = false)
         })
 
     }
@@ -83,7 +79,7 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
-                viewModel._currentTab.value = position
+                viewModel.currentTab.value = position
 
             }
 
@@ -110,7 +106,7 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
                         position,
                         true
                     )
-                    viewModel._currentTab.value = position
+                    viewModel.currentTab.value = position
                 }
             }
 
@@ -124,7 +120,7 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
                     moveToMain()
                 }
 
-                viewModel._currentTab.value = position
+                viewModel.currentTab.value = position
             }
 
             binding.btnGetStarted -> {

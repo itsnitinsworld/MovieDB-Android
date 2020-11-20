@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.themoviedb.base.BaseViewModel
 import com.themoviedb.model.*
-import com.themoviedb.utils.AppConstants
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
@@ -21,6 +20,24 @@ class MovieDetailViewModel : BaseViewModel() {
 
     private val _onMessageError = MutableLiveData<String>()
     val onMessageError: LiveData<String> = _onMessageError
+
+    private val _isEmptyCastList = MutableLiveData<Boolean>()
+    val isEmptyCastList: LiveData<Boolean> = _isEmptyCastList
+
+    private val _isEmptySimilarMoviesList = MutableLiveData<Boolean>()
+    val isEmptySimilarMoviesList: LiveData<Boolean> = _isEmptySimilarMoviesList
+
+
+    private val _isEmptyReviewsList = MutableLiveData<Boolean>()
+    val isEmptyReviewsList: LiveData<Boolean> = _isEmptyReviewsList
+
+    private val _isEmptyProductionList = MutableLiveData<Boolean>()
+    val isEmptyProductionList: LiveData<Boolean> = _isEmptyProductionList
+
+
+    private val _isFinancialNegative = MutableLiveData<Boolean>()
+    val isFinancialNegative: LiveData<Boolean> = _isFinancialNegative
+
 
     fun getDetails(movieId: String) {
 
@@ -42,21 +59,38 @@ class MovieDetailViewModel : BaseViewModel() {
 
             override fun onNext(t: MovieDetailsModel?) {
                 _movieDetailsModel.value = t
+
+                if (t == null) {
+                    _isEmptyCastList.value = true
+                    _isEmptyProductionList.value = true
+                    _isEmptySimilarMoviesList.value = true
+                    _isEmptyReviewsList.value = true
+                    return
+                }
+                _isEmptyCastList.value = t.movieCast.isNullOrEmpty()
+                _isEmptyReviewsList.value = t.movieReviews.isNullOrEmpty()
+                _isEmptySimilarMoviesList.value = t.similarMoviesResult.isNullOrEmpty()
+                _isEmptyProductionList.value =
+                    t.movieSynopsis == null || t.movieSynopsis?.productionCompanies.isNullOrEmpty()
+
+                _isFinancialNegative.value =
+                    (t.movieSynopsis?.budget!!.toLong() - t.movieSynopsis?.revenue!!) > 0
+
             }
 
         }
 
 
         val movieDetails: Observable<MovieDetailsModel> = Observable.zip(
-            apiInterface.movieDetails(movieId, AppConstants.MovieDB.API_KEY)!!
+            apiInterface.movieDetails(movieId)!!
                 .subscribeOn(Schedulers.io()),
-            apiInterface.movieCredits(movieId, AppConstants.MovieDB.API_KEY)!!
+            apiInterface.movieCredits(movieId)!!
                 .subscribeOn(Schedulers.io()),
-            apiInterface.movieReviews(movieId, AppConstants.MovieDB.API_KEY)!!
+            apiInterface.movieReviews(movieId)!!
                 .subscribeOn(Schedulers.io()),
-            apiInterface.similarMovies(movieId, AppConstants.MovieDB.API_KEY)!!
+            apiInterface.similarMovies(movieId)!!
                 .subscribeOn(Schedulers.io()),
-            Function4<MovieSynopsisResponse?, MovieCreditResponse?, MovieReviewResponse?, SimilarMoviesResponse?, MovieDetailsModel?> { movieDetails, movieCreditResponse, movieReviewResponse, similarMoviesResponse ->
+            Function4<MovieSynopsisResponse?, MovieCreditResponse?, MovieReviewResponse?, MovieListResponse?, MovieDetailsModel?> { movieDetails, movieCreditResponse, movieReviewResponse, similarMoviesResponse ->
 
 
                 movieDetails?.productionCompanies =

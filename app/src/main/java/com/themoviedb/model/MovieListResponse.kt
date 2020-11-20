@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 @JsonClass(generateAdapter = true)
 data class MovieListResponse(
     @Json(name = "dates")
-    val dates: Dates,
+    val dates: Dates?,
     @Json(name = "page")
     val page: Int,
     @Json(name = "results")
@@ -30,7 +30,7 @@ data class MovieResults(
     @Json(name = "adult")
     val adult: Boolean,
     @Json(name = "backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String?,
     @Json(name = "genre_ids")
     val genreIds: List<Int>,
     @Json(name = "id")

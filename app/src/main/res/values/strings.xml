@@ -24,12 +24,18 @@
 
     <string name="btn_book_now">Book Now</string>
     
-    <string name="lbl_user_score">User Score</string>
+    <string name="lbl_vote_avg">Vote Avg.</string>
     <string name="lbl_overview">Overview</string>
     <string name="lbl_cast">Cast</string>
     <string name="lbl_production">Production</string>
     <string name="lbl_similar_movies">Similar Movies</string>
     <string name="lbl_reviews">Reviews</string>
+    <string name="lbl_financial">Financial</string>
+    <string name="lbl_budget">Budget</string>
+    <string name="lbl_revenue">Revenue</string>
+    <string name="lbl_more">More</string>
+    <string name="lbl_less">Less</string>
+
 
 
 </resources>

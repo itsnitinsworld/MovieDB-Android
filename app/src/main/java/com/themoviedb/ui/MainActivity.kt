@@ -55,12 +55,11 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
 
     override fun onBackPressed() {
-
         when (navHostFragment.navController.graph.startDestination) {
             navHostFragment.navController.currentDestination?.id -> showExitConfirmation()
             else -> {
                 super.onBackPressed()
-                val currentFragment = navHostFragment.childFragmentManager.fragments[0]
+                val currentFragment = navHostFragment.childFragmentManager.fragments.firstOrNull()
                 if (currentFragment is BaseFragment) currentFragment.onPageRefreshListener()
             }
         }
@@ -105,4 +104,5 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
             setSupportActionBar(toolbar)
         }
     }
+
 }

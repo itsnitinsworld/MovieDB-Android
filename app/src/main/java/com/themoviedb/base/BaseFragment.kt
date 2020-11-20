@@ -1,6 +1,7 @@
 package com.themoviedb.base
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 
@@ -33,5 +34,7 @@ abstract class BaseFragment : Fragment() {
     abstract fun initViewModel()
     abstract fun initListeners()
     open fun initObservers() {}
+
+
 
 }

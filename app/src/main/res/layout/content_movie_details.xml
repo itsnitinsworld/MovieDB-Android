@@ -71,10 +71,10 @@
                 app:layout_constraintTop_toTopOf="@+id/tvGenre">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/lblUserScore"
+                    android:id="@+id/lblVoteAvg"
                     style="@style/textView"
                     android:fontFamily="@font/dm_serif_display_regular"
-                    android:text="@string/lbl_user_score"
+                    android:text="@string/lbl_vote_avg"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/large_textsize"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -83,27 +83,27 @@
 
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvVoteCount"
+                    android:id="@+id/tvVoteAvg"
                     style="@style/withAlphaTextView"
                     android:layout_marginStart="@dimen/tiny_small_margin"
-                    android:text='@{String.format("%.2f%s",movieDetailModel.movieSynopsis.popularity," %")}'
+                    android:text='@{String.format("%.2f",movieDetailModel.movieSynopsis.voteAverage)}'
                     android:textSize="@dimen/default_textsize"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/ivHeart"
-                    app:layout_constraintTop_toBottomOf="@+id/lblUserScore" />
+                    app:layout_constraintTop_toBottomOf="@+id/lblVoteAvg" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivHeart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_heart"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvVoteCount"
-                    app:layout_constraintEnd_toStartOf="@+id/tvVoteCount"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvVoteAvg"
+                    app:layout_constraintEnd_toStartOf="@+id/tvVoteAvg"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvVoteCount" />
+                    app:layout_constraintTop_toTopOf="@+id/tvVoteAvg" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -145,10 +145,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
-                tools:listitem="@layout/row_cast"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/lblCast" />
+                app:layout_constraintTop_toBottomOf="@+id/lblCast"
+                tools:listitem="@layout/row_cast" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/lblProduction"
@@ -171,6 +171,102 @@
                 app:layout_constraintTop_toBottomOf="@+id/lblProduction" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lblFinancial"
+                style="@style/textView"
+                android:layout_marginTop="@dimen/default_margin"
+                android:fontFamily="@font/dm_serif_display_regular"
+                android:text="@string/lbl_financial"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/heading_textsize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvProduction" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llFinanceBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded"
+                android:backgroundTint="@color/lite_blue_shade"
+                android:padding="@dimen/small_padding"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblFinancial">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivMoneyBag"
+                    android:layout_width="@dimen/small_image"
+                    android:layout_height="@dimen/small_image"
+                    android:src="@drawable/ic_money_bag"
+                    app:layout_constraintBottom_toBottomOf="@+id/llBudgetRevenueBox"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@id/llBudgetRevenueBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@+id/ivProfitLoss"
+                    app:layout_constraintStart_toEndOf="@+id/ivMoneyBag"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lblBudget"
+                        style="@style/textView"
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:fontFamily="@font/dm_serif_display_regular"
+                        android:text="@string/lbl_budget"
+                        android:textSize="@dimen/large_textsize"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvBudget"
+                        style="@style/textView"
+                        android:fontFamily="@font/dm_serif_display_italic"
+                        android:text="@{movieDetailModel.movieSynopsis.budgetString}"
+                        android:textSize="@dimen/default_textsize"
+                        app:layout_constraintStart_toStartOf="@+id/lblBudget"
+                        app:layout_constraintTop_toBottomOf="@+id/lblBudget"
+                        tools:text="@string/dummy_number" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lblRevenue"
+                        style="@style/textView"
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:fontFamily="@font/dm_serif_display_regular"
+                        android:text="@string/lbl_revenue"
+                        android:textSize="@dimen/large_textsize"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/lblBudget"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRevenue"
+                        style="@style/textView"
+                        android:fontFamily="@font/dm_serif_display_italic"
+                        android:text="@{movieDetailModel.movieSynopsis.revenueString}"
+                        android:textSize="@dimen/default_textsize"
+                        app:layout_constraintStart_toStartOf="@+id/lblRevenue"
+                        app:layout_constraintTop_toBottomOf="@+id/lblRevenue"
+                        tools:text="@string/dummy_number" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivProfitLoss"
+                    android:layout_width="@dimen/small_image"
+                    android:layout_height="@dimen/small_image"
+                    android:src="@drawable/ic_profit"
+                    android:tint="@color/green"
+                    app:layout_constraintBottom_toBottomOf="@+id/llBudgetRevenueBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/llBudgetRevenueBox"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/lblReview"
                 style="@style/textView"
                 android:layout_marginTop="@dimen/default_margin"
@@ -179,7 +275,7 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/heading_textsize"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvProduction" />
+                app:layout_constraintTop_toBottomOf="@+id/llFinanceBox" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivMoreReview"
@@ -191,49 +287,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/lblReview" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <include
                 android:id="@+id/llReviewBox"
+                layout="@layout/row_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_rounded"
-                android:backgroundTint="@color/lite_blue_shade"
-                android:padding="@dimen/small_padding"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lblReview">
+                app:layout_constraintTop_toBottomOf="@+id/lblReview" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivQuote"
-                    android:layout_width="@dimen/small_image"
-                    android:layout_height="@dimen/small_image"
-                    android:src="@drawable/ic_double_quotes"
-                    android:tint="@color/grey"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvReview"
-                    style="@style/textView"
-                    android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:ellipsize="end"
-                    android:maxLines="6"
-                    android:textSize="@dimen/default_textsize"
-                    app:layout_constraintEnd_toStartOf="@+id/ivReviewerImage"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivQuote" />
-
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivReviewerImage"
-                    android:layout_width="@dimen/large_image"
-                    android:layout_height="@dimen/large_image"
-                    android:src="@drawable/tools_user_profile"
-                    app:civ_border_color="#FF000000"
-                    app:civ_border_width="2dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvReview" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/lblSimilarMovies"
@@ -252,9 +313,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:orientation="horizontal"
-                tools:listitem="@layout/row_cast"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/lblSimilarMovies" />
+                app:layout_constraintTop_toBottomOf="@+id/lblSimilarMovies"
+                tools:listitem="@layout/row_cast" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
