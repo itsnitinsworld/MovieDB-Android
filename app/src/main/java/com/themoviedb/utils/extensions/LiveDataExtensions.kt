@@ -7,7 +7,7 @@ import androidx.lifecycle.MediatorLiveData
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 20-11-2020
  */
 
 fun <T> LiveData<T>.debounce(duration: Long = 1000L) = MediatorLiveData<T>().also { mld ->

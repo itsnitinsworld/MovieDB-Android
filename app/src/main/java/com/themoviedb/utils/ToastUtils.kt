@@ -5,7 +5,7 @@ import android.widget.Toast
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 20-11-2020
  */
 object ToastUtils {
     private var mContext: Context? = null

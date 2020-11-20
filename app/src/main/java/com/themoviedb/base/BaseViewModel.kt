@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 20-11-2020
  */
 open class BaseViewModel : ViewModel() {
     var compositeDisposable: CompositeDisposable? = null

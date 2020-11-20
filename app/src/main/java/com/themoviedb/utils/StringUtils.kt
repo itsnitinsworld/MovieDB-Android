@@ -2,7 +2,7 @@ package com.themoviedb.utils
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 20-11-2020
  */
 object StringUtils {
     fun getCurrency(value: Float, countryCode: String = "USD"): String {

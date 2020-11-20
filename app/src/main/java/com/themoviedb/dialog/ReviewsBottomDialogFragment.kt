@@ -14,7 +14,7 @@ import com.themoviedb.model.MovieReviewResult
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 20-11-2020
  */
 class ReviewsBottomDialogFragment : BottomSheetDialogFragment() {
 

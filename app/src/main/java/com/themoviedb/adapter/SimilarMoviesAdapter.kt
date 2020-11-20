@@ -13,7 +13,7 @@ import com.themoviedb.utils.extensions.makeVisible
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 20-11-2020
  */
 class SimilarMoviesAdapter(
     private var callBacks: (view: View) -> Unit

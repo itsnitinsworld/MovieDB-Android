@@ -3,16 +3,14 @@
 
     <string name="tag_line">Millions of movies, TV shows and people to discover. Explore now.</string>
 
-    <string name="lbl_intro_1">Tired of\n<b>fake forwards?</b></string>
-    <string name="des_intro_1">Shore will allows you to discover the facts in real-time with no-extra efforts.</string>
+    <string name="lbl_intro_1">Looking for\n<b>your next binge?</b></string>
+    <string name="des_intro_1">TMDB  will allows you to discover millions of movies on your fingertips.</string>
     <string name="btn_get_started">Get Started</string>
     <string name="skip">Skip</string>
-    <string name="lbl_intro_2">Read\n<b>Facts, Not Fakes </b></string>
-    <string name="des_intro_2">Wrong information results as weak arguments in debates, Read facts and put better arguments</string>
-    <string name="lbl_intro_3">Share\n<b>Facts, Not Fakes </b></string>
-    <string name="des_intro_3">Don\'t blindly trust on your friend. Who knows he has done it on someone else.</string>
-    <string name="lbl_intro_4">We respect\n<b>your privacy</b></string>
-    <string name="des_intro_4">We don\'t collect your personal information. We serve to make a better future for us.</string>
+    <string name="lbl_intro_2">Read reviews\n<b>before watching </b></string>
+    <string name="des_intro_2">Your time is valuable, don\'t waste it in watching below-average movies.</string>
+    <string name="lbl_intro_3">Find it\n<b>Select it, Watch it </b></string>
+    <string name="des_intro_3">You have done a good job, now its time watch it!</string>
 
     <string name="extra_large_dummy_text">What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry. \n\nWhat is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry. \nWhat is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry. \n\nWhat is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry.</string>
     <string name="large_dummy_text">What is Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry.</string>

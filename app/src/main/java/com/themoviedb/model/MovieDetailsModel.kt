@@ -2,7 +2,7 @@ package com.themoviedb.model
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 20-11-2020
  */
 data class MovieDetailsModel(
     var movieSynopsis: MovieSynopsisResponse?,

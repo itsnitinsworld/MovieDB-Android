@@ -41,10 +41,6 @@ class MovieDetailFragment : BaseFragment() {
     private var mSimilarMoviesAdapter: SimilarMoviesAdapter? = null
     private var mProductionAdapter: ProductionAdapter? = null
 
-    private val llReviewBox: ConstraintLayout by lazy {
-        binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
-    }
-
     private val movieResults: MovieResults by lazy {
         fromBundle(requireArguments()).movieResult
     }
@@ -84,6 +80,8 @@ class MovieDetailFragment : BaseFragment() {
             }
 
 
+        val llReviewBox =
+            binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
         val lblMoreLess = llReviewBox.findViewById<AppCompatTextView>(R.id.lblMoreLess)
         lblMoreLess.tag = false
         lblMoreLess.setOnClickListener {
@@ -153,6 +151,8 @@ class MovieDetailFragment : BaseFragment() {
 
         viewModel.movieDetailsMode.observe(viewLifecycleOwner, Observer {
             binding.movieDetailModel = it
+            val llReviewBox =
+                binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
             if (!it.movieReviews.isNullOrEmpty()) {
                 llReviewBox.findViewById<AppCompatTextView>(R.id.tvReview).text =
                     it.movieReviews.first().content
@@ -188,7 +188,8 @@ class MovieDetailFragment : BaseFragment() {
         })
 
         viewModel.isEmptyReviewsList.observe(viewLifecycleOwner, Observer {
-            llReviewBox.makeVisible(!it)
+            binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
+                .makeVisible(!it)
             binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblReview)
                 .makeVisible(!it)
             binding.llMovieDetailContent.findViewById<AppCompatImageView>(R.id.ivMoreReview)
