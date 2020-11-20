@@ -3,7 +3,7 @@ package com.themoviedb.ui.fragment.movielist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.themoviedb.base.BaseViewModel
-import com.themoviedb.ui.fragment.movielist.model.MovieResults
+import com.themoviedb.model.MovieResults
 import com.themoviedb.utils.AppConstants
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.SingleObserver

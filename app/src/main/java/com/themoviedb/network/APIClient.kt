@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
  */
 class APIClient {
     companion object {
-        private const val BASE_URL = "https://api.themoviedb.org/3/";
+        private const val BASE_URL = "https://api.themoviedb.org/3/movie/"
         private var instance: Retrofit? = null
 
         fun getRetrofit(): Retrofit {

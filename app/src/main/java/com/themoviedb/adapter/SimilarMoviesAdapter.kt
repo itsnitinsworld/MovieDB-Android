@@ -1,19 +1,23 @@
 package com.themoviedb.adapter
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themoviedb.R
-import com.themoviedb.databinding.RowMovieBinding
+import com.themoviedb.databinding.RowCastBinding
 import com.themoviedb.model.MovieResults
 import com.themoviedb.utils.extensions.loadImage
+import com.themoviedb.utils.extensions.makeVisible
 
-class MoviesListAdapter(
+/**
+ * @author- Nitin Khanna
+ * @date -
+ */
+class SimilarMoviesAdapter(
     private var callBacks: (view: View) -> Unit
-) : RecyclerView.Adapter<MoviesListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<SimilarMoviesAdapter.ViewHolder>() {
     var items: List<MovieResults> = emptyList()
     override fun getItemCount(): Int {
         return items.size
@@ -34,7 +38,7 @@ class MoviesListAdapter(
         return ViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.row_movie,
+                R.layout.row_cast,
                 parent,
                 false
             )
@@ -47,17 +51,16 @@ class MoviesListAdapter(
 
     }
 
-    inner class ViewHolder(private val binding: RowMovieBinding) :
+    inner class ViewHolder(private val binding: RowCastBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(model: MovieResults) {
-            binding.model = model
             binding.root.tag = model
             binding.root.setOnClickListener {
                 callBacks.invoke(it)
             }
 
-            binding.rating.rating = model.voteAverage.toFloat() / 2
-            binding.ivBanner.loadImage(model.posterPath)
+            binding.textView.makeVisible(false)
+            binding.imageView.loadImage(model.posterPath)
         }
     }
 

@@ -26,7 +26,7 @@ fun ImageView.loadImage(image: String?) {
     val options: RequestOptions = RequestOptions()
         .centerCrop()
         .placeholder(R.drawable.anim_progress_bar)
-        .error(R.drawable.logo)
+        .error(R.drawable.ic_logo)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .priority(Priority.HIGH)
         .dontAnimate()

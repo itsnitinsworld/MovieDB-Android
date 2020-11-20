@@ -104,17 +104,27 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
         when (p0) {
             null -> return
             binding.ivLeft -> {
-                if (binding.viewPager.currentItem - 1 >= 0) binding.viewPager.setCurrentItem(
-                    binding.viewPager.currentItem - 1,
-                    true
-                )
+                if (binding.viewPager.currentItem - 1 >= 0) {
+                    val position = binding.viewPager.currentItem - 1
+                    binding.viewPager.setCurrentItem(
+                        position,
+                        true
+                    )
+                    viewModel._currentTab.value = position
+                }
             }
 
             binding.ivRight -> {
-                if (binding.viewPager.currentItem + 1 < pagerAdapter.count) binding.viewPager.currentItem =
-                    binding.viewPager.currentItem + 1 else { // end presentation
+                var position = 0
+                if (binding.viewPager.currentItem + 1 < pagerAdapter.count) {
+                    position =
+                        binding.viewPager.currentItem + 1
+                    binding.viewPager.currentItem = position
+                } else { // end presentation
                     moveToMain()
                 }
+
+                viewModel._currentTab.value = position
             }
 
             binding.btnGetStarted -> {
@@ -126,7 +136,7 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun moveToMain() {
-        PreferenceUtils.savePref(AppConstants.Preference.IS_FIRST_TIME_USER,false)
+        PreferenceUtils.savePref(AppConstants.Preference.IS_FIRST_TIME_USER, false)
         findNavController().navigate(IntroScreenFragmentDirections.actionToMovieList())
     }
 

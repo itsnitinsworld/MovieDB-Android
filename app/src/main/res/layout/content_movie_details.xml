@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="movieResult"
-            type="com.themoviedb.ui.fragment.movielist.model.MovieResults" />
+            type="com.themoviedb.model.MovieResults" />
+
+
+        <variable
+            name="movieDetailModel"
+            type="com.themoviedb.model.MovieDetailsModel" />
+
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -24,7 +31,7 @@
                 style="@style/textView"
                 android:layout_width="0dp"
                 android:maxLines="3"
-                android:text="@string/medium_dummy_text"
+                android:text="@{movieDetailModel.movieSynopsis.genreString}"
                 android:textSize="@dimen/default_textsize"
                 app:layout_constraintEnd_toStartOf="@+id/llUserScore"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,19 +42,31 @@
                 style="@style/textView"
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/extra_small_margin"
-                android:maxLines="3"
-                android:text="@string/medium_dummy_text"
+                android:text='@{String.format("%s%s%s","Runtime: ",movieDetailModel.movieSynopsis.runtimeString," h")}'
                 android:textSize="@dimen/default_textsize"
                 app:layout_constraintEnd_toStartOf="@+id/llUserScore"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLanguage"
+                style="@style/textView"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/extra_small_margin"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text='@{String.format("%s%s","Language: ",movieDetailModel.movieSynopsis.languageString)}'
+                android:textSize="@dimen/default_textsize"
+                app:layout_constraintEnd_toStartOf="@+id/llUserScore"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRuntime" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/llUserScore"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@+id/tvRuntime"
+                app:layout_constraintBottom_toBottomOf="@+id/tvLanguage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvGenre">
 
@@ -67,7 +86,7 @@
                     android:id="@+id/tvVoteCount"
                     style="@style/withAlphaTextView"
                     android:layout_marginStart="@dimen/tiny_small_margin"
-                    android:text="@{String.valueOf(movieResult.voteAverage).concat(`%`)}"
+                    android:text='@{String.format("%.2f%s",movieDetailModel.movieSynopsis.popularity," %")}'
                     android:textSize="@dimen/default_textsize"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -97,15 +116,13 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/heading_textsize"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRuntime" />
+                app:layout_constraintTop_toBottomOf="@+id/tvLanguage" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvOverview"
                 style="@style/textView"
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/small_margin"
-                android:ellipsize="end"
-                android:maxLines="6"
                 android:text="@{movieResult.overview}"
                 android:textSize="@dimen/default_textsize"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -128,6 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
+                tools:listitem="@layout/row_cast"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/lblCast" />
@@ -167,9 +185,9 @@
                 android:id="@+id/ivMoreReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/small_padding"
                 android:src="@drawable/ic_right_arrow"
                 app:layout_constraintBottom_toBottomOf="@+id/lblReview"
-                android:padding="@dimen/small_padding"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/lblReview" />
 
@@ -198,16 +216,15 @@
                     android:layout_width="0dp"
                     android:layout_marginTop="@dimen/small_margin"
                     android:ellipsize="end"
-                    android:maxLines="3"
-                    android:text="@string/extra_large_dummy_text"
+                    android:maxLines="6"
                     android:textSize="@dimen/default_textsize"
-                    app:layout_constraintEnd_toStartOf="@+id/tvReviewerImage"
+                    app:layout_constraintEnd_toStartOf="@+id/ivReviewerImage"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivQuote" />
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/tvReviewerImage"
+                    android:id="@+id/ivReviewerImage"
                     android:layout_width="@dimen/large_image"
                     android:layout_height="@dimen/large_image"
                     android:src="@drawable/tools_user_profile"
@@ -230,11 +247,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/llReviewBox" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rSimilarMovies"
+                android:id="@+id/rvSimilarMovies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:orientation="horizontal"
+                tools:listitem="@layout/row_cast"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/lblSimilarMovies" />
 

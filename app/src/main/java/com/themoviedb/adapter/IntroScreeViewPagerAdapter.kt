@@ -8,11 +8,16 @@ import com.themoviedb.R
 import com.themoviedb.ui.fragment.intro.IntroViewPagerFragment
 import com.themoviedb.ui.fragment.intro.model.IntroPagerModel
 
+/**
+ * @author- Nitin Khanna
+ * @date - 20-11-2020
+ */
+
 class IntroScreeViewPagerAdapter(fm: FragmentManager?) :
     FragmentPagerAdapter(fm!!) {
 
 
-     fun addItems(context: Context?) {
+    fun addItems(context: Context?) {
         if (context == null) return
         addFragment(
             IntroPagerModel(

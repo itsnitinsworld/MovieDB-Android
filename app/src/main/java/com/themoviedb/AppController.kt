@@ -2,6 +2,7 @@ package com.themoviedb
 
 import android.app.Application
 import com.themoviedb.utils.PreferenceUtils
+import com.themoviedb.utils.ToastUtils
 
 /**
  * @author Nitin Khanna
@@ -21,6 +22,7 @@ class AppController : Application() {
         super.onCreate()
         instance = this
         PreferenceUtils.init(this)
+        ToastUtils.init(this)
     }
 
 

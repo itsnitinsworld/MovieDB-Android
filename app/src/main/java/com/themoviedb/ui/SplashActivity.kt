@@ -3,6 +3,7 @@ package com.themoviedb.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.themoviedb.R
@@ -22,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
         )
         setContentView(R.layout.activity_splash)
         val timeInMil = 1500L
-        val handler = Handler()
+        val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             val intent = Intent(
                 this, MainActivity::class.java

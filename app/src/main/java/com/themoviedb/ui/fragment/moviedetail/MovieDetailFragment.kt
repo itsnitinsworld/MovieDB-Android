@@ -4,23 +4,47 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.themoviedb.R
+import com.themoviedb.adapter.CastListAdapter
+import com.themoviedb.adapter.ProductionAdapter
+import com.themoviedb.adapter.SimilarMoviesAdapter
 import com.themoviedb.base.BaseFragment
 import com.themoviedb.databinding.MovieDetailFragmentBinding
+import com.themoviedb.model.MovieCast
+import com.themoviedb.model.MovieResults
+import com.themoviedb.model.ProductionCompany
 import com.themoviedb.ui.MainActivity
 import com.themoviedb.ui.fragment.moviedetail.MovieDetailFragmentArgs.fromBundle
-import com.themoviedb.ui.fragment.movielist.model.MovieResults
+import com.themoviedb.utils.ToastUtils
 import com.themoviedb.utils.extensions.loadImage
+import com.themoviedb.utils.extensions.makeVisible
 
 
 class MovieDetailFragment : BaseFragment() {
     private lateinit var viewModel: MovieDetailViewModel
     private lateinit var binding: MovieDetailFragmentBinding
+    private var mCastAdapter: CastListAdapter? = null
+    private var mSimilarMoviesAdapter: SimilarMoviesAdapter? = null
+    private var mProductionAdapter: ProductionAdapter? = null
 
     private val movieResults: MovieResults by lazy {
         fromBundle(requireArguments()).movieResult
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getDetails(movieId = movieResults.id.toString())
     }
 
     override fun onCreateView(
@@ -45,6 +69,98 @@ class MovieDetailFragment : BaseFragment() {
         binding.collpasingToolbar.title = movieResults.title
         binding.movieResult = movieResults
         binding.ivMovieBanner.loadImage(movieResults.posterPath)
+
+
+        initRecyclerViews()
+    }
+
+    private fun initRecyclerViews() {
+
+        val mCastLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        mCastLayoutManager.reverseLayout = false
+
+        val rvCast = binding.llMovieDetailContent.findViewById<RecyclerView>(R.id.rvCast)
+        mCastAdapter = CastListAdapter {
+            ToastUtils.show((it.tag as MovieCast).name)
+        }
+        rvCast.layoutManager =
+            mCastLayoutManager
+        rvCast.adapter = mCastAdapter
+        LinearSnapHelper().attachToRecyclerView(rvCast)
+
+        val mProductionLayoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        mProductionLayoutManager.reverseLayout = false
+        val rvProduction =
+            binding.llMovieDetailContent.findViewById<RecyclerView>(R.id.rvProduction)
+        mProductionAdapter = ProductionAdapter {
+            ToastUtils.show((it.tag as ProductionCompany).name)
+        }
+        rvProduction.layoutManager =
+            mProductionLayoutManager
+        rvProduction.adapter = mProductionAdapter
+        LinearSnapHelper().attachToRecyclerView(rvProduction)
+
+
+        val mSimilarMovieLayoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+        mSimilarMovieLayoutManager.reverseLayout = false
+        val rvSimilarMovies =
+            binding.llMovieDetailContent.findViewById<RecyclerView>(R.id.rvSimilarMovies)
+        mSimilarMoviesAdapter = SimilarMoviesAdapter {
+            val directions =
+                MovieDetailFragmentDirections.actionToMovieDetail(it.tag as MovieResults)
+            findNavController().navigate(directions)
+        }
+        rvSimilarMovies.layoutManager =
+            mSimilarMovieLayoutManager
+        rvSimilarMovies.adapter = mSimilarMoviesAdapter
+        LinearSnapHelper().attachToRecyclerView(rvSimilarMovies)
+
+
+    }
+
+    override fun initObservers() {
+        super.initObservers()
+        viewModel.isViewLoading.observe(viewLifecycleOwner, Observer {
+            if (it) binding.progressbar.show()
+            else binding.progressbar.hide()
+        })
+
+        viewModel.movieDetailsMode.observe(viewLifecycleOwner, Observer {
+            binding.movieDetailModel = it
+            if (!it.movieReviews.isNullOrEmpty()) {
+                binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.tvReview).text =
+                    it.movieReviews.first().content
+
+                binding.llMovieDetailContent.findViewById<AppCompatImageView>(R.id.ivReviewerImage)
+                    .loadImage(
+                        it.movieReviews.first().authorDetails?.avatarPath
+                    )
+            }
+
+
+            binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
+                .makeVisible(!it.movieReviews.isNullOrEmpty())
+
+            mCastAdapter?.addAll(it.movieCast)
+            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblCast)
+                .makeVisible(it.movieCast.isNotEmpty())
+
+            mProductionAdapter?.addAll(it.movieSynopsis?.productionCompanies ?: emptyList())
+            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblProduction)
+                .makeVisible((it.movieSynopsis?.productionCompanies ?: emptyList()).isNotEmpty())
+
+            mSimilarMoviesAdapter?.addAll(it.similarMoviesResult)
+            binding.llMovieDetailContent.findViewById<AppCompatTextView>(R.id.lblSimilarMovies)
+                .makeVisible(it.similarMoviesResult.isNotEmpty())
+
+
+        })
+
+        viewModel.onMessageError.observe(viewLifecycleOwner, Observer {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+        })
     }
 
 

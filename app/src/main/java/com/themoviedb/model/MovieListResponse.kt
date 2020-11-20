@@ -1,4 +1,4 @@
-package com.themoviedb.ui.fragment.movielist.model
+package com.themoviedb.model
 
 
 import android.annotation.SuppressLint

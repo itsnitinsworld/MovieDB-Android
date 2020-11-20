@@ -14,8 +14,8 @@ import com.themoviedb.R
 import com.themoviedb.adapter.MoviesListAdapter
 import com.themoviedb.base.BaseFragment
 import com.themoviedb.databinding.MovieListFragmentBinding
+import com.themoviedb.model.MovieResults
 import com.themoviedb.ui.MainActivity
-import com.themoviedb.ui.fragment.movielist.model.MovieResults
 import kotlinx.android.synthetic.main.movie_list_fragment.*
 
 class MovieListFragment : BaseFragment() {

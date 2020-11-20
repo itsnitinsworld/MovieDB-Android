@@ -1,25 +1,28 @@
 package com.themoviedb.adapter
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themoviedb.R
-import com.themoviedb.databinding.RowMovieBinding
-import com.themoviedb.model.MovieResults
+import com.themoviedb.databinding.RowCastBinding
+import com.themoviedb.model.MovieCast
 import com.themoviedb.utils.extensions.loadImage
 
-class MoviesListAdapter(
+/**
+ * @author- Nitin Khanna
+ * @date - 20-11-2020
+ */
+class CastListAdapter(
     private var callBacks: (view: View) -> Unit
-) : RecyclerView.Adapter<MoviesListAdapter.ViewHolder>() {
-    var items: List<MovieResults> = emptyList()
+) : RecyclerView.Adapter<CastListAdapter.ViewHolder>() {
+    var items: List<MovieCast> = emptyList()
     override fun getItemCount(): Int {
         return items.size
     }
 
-    fun addAll(items: List<MovieResults>) {
+    fun addAll(items: List<MovieCast>) {
         if (this.items != items) {
             this.items = items
             notifyDataSetChanged()
@@ -34,7 +37,7 @@ class MoviesListAdapter(
         return ViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.row_movie,
+                R.layout.row_cast,
                 parent,
                 false
             )
@@ -47,17 +50,17 @@ class MoviesListAdapter(
 
     }
 
-    inner class ViewHolder(private val binding: RowMovieBinding) :
+    inner class ViewHolder(private val binding: RowCastBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: MovieResults) {
-            binding.model = model
+        fun bind(model: MovieCast) {
             binding.root.tag = model
-            binding.root.setOnClickListener {
+            binding.root.setOnLongClickListener {
                 callBacks.invoke(it)
+                false
             }
 
-            binding.rating.rating = model.voteAverage.toFloat() / 2
-            binding.ivBanner.loadImage(model.posterPath)
+            binding.textView.text = model.name
+            binding.imageView.loadImage(model.profilePath)
         }
     }
 

@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.themoviedb.ui.fragment.movielist.model.MovieResults" />
+            type="com.themoviedb.model.MovieResults" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
