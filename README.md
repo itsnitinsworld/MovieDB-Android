@@ -49,6 +49,7 @@ Libraries and programming languages used in the project are-
 * [Kotlin](https://kotlinlang.org/)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [Retrofit](https://square.github.io/retrofit/)
+* [Dagger](https://github.com/google/dagger)
 
 
 

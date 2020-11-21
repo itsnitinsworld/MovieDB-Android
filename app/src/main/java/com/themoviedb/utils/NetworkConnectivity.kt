@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 21-11-20
  */
 class Network @Inject constructor(val context: Context) : NetworkConnectivity {
     override fun getNetworkInfo(): NetworkInfo? {

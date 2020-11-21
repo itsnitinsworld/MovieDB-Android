@@ -6,7 +6,7 @@ import dagger.android.ContributesAndroidInjector
 
 /**
  * @author- Nitin Khanna
- * @date -
+ * @date - 21-11-20
  */
 @Module
 abstract class ActivityModuleBuilder {
