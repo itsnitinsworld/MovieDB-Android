@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -18,10 +17,14 @@ import com.themoviedb.model.MovieResults
 import com.themoviedb.ui.MainActivity
 import com.themoviedb.utils.extensions.makeVisible
 import kotlinx.android.synthetic.main.movie_list_fragment.*
+import javax.inject.Inject
 
 class MovieListFragment : BaseFragment() {
     private lateinit var binding: MovieListFragmentBinding
-    private lateinit var viewModel: MovieListViewModel
+
+    @Inject
+    lateinit var viewModel: MovieListViewModel
+
     private lateinit var mAdapter: MoviesListAdapter
 
     override fun onCreateView(
@@ -37,10 +40,6 @@ class MovieListFragment : BaseFragment() {
         (mContext as MainActivity).setToolbar()
     }
 
-    override fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(MovieListViewModel::class.java)
-    }
-
     override fun initListeners() {
         val layoutManager = LinearLayoutManager(context)
         mAdapter =
@@ -51,8 +50,6 @@ class MovieListFragment : BaseFragment() {
             }
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = mAdapter
-
-
     }
 
     override fun initObservers() {

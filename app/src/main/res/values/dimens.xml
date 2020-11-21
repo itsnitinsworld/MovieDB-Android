@@ -26,8 +26,6 @@
     <dimen name="extra_small_image">20dp</dimen>
     <dimen name="large_image">36dp</dimen>
     <dimen name="extra_large_image">50dp</dimen>
-    <dimen name="lottie_icon_width">130dp</dimen>
-    <dimen name="lottie_icon_height">90dp</dimen>
 
 
     <dimen name="btn_height">40dp</dimen>
@@ -41,6 +39,5 @@
 
     <dimen name="divider_height">1dp</dimen>
 
-    <dimen name="helper_min_height">100dp</dimen>
     <dimen name="max_intro_width">250dp</dimen>
 </resources>

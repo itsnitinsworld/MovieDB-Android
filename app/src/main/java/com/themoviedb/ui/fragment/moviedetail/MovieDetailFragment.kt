@@ -10,7 +10,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -23,19 +22,21 @@ import com.themoviedb.adapter.SimilarMoviesAdapter
 import com.themoviedb.base.BaseFragment
 import com.themoviedb.databinding.MovieDetailFragmentBinding
 import com.themoviedb.dialog.ReviewsBottomDialogFragment
-import com.themoviedb.model.MovieCast
-import com.themoviedb.model.MovieResults
-import com.themoviedb.model.MovieReviewResult
-import com.themoviedb.model.ProductionCompany
+import com.themoviedb.model.*
 import com.themoviedb.ui.MainActivity
 import com.themoviedb.ui.fragment.moviedetail.MovieDetailFragmentArgs.fromBundle
 import com.themoviedb.utils.ToastUtils
 import com.themoviedb.utils.extensions.loadImage
 import com.themoviedb.utils.extensions.makeVisible
+import com.themoviedb.utils.extensions.observe
+import javax.inject.Inject
 
 
 class MovieDetailFragment : BaseFragment() {
-    private lateinit var viewModel: MovieDetailViewModel
+
+    @Inject
+    lateinit var viewModel: MovieDetailViewModel
+
     private lateinit var binding: MovieDetailFragmentBinding
     private var mCastAdapter: CastListAdapter? = null
     private var mSimilarMoviesAdapter: SimilarMoviesAdapter? = null
@@ -65,9 +66,6 @@ class MovieDetailFragment : BaseFragment() {
         binding.collpasingToolbar.title = movieResults.title
     }
 
-    override fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
-    }
 
     override fun initListeners() {
         binding.movieResult = movieResults
@@ -149,24 +147,7 @@ class MovieDetailFragment : BaseFragment() {
             else binding.progressbar.hide()
         })
 
-        viewModel.movieDetailsMode.observe(viewLifecycleOwner, Observer {
-            binding.movieDetailModel = it
-            val llReviewBox =
-                binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
-            if (!it.movieReviews.isNullOrEmpty()) {
-                llReviewBox.findViewById<AppCompatTextView>(R.id.tvReview).text =
-                    it.movieReviews.first().content
-
-                llReviewBox.findViewById<AppCompatImageView>(R.id.ivReviewerImage)
-                    .loadImage(
-                        it.movieReviews.first().authorDetails?.avatarPath
-                    )
-            }
-
-            mCastAdapter?.addAll(it.movieCast)
-            mProductionAdapter?.addAll(it.movieSynopsis?.productionCompanies ?: emptyList())
-            mSimilarMoviesAdapter?.addAll(it.similarMoviesResult)
-        })
+        observe(viewModel.movieDetailsMode, ::handleMovieDetailResponse)
 
         viewModel.onMessageError.observe(viewLifecycleOwner, Observer {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
@@ -196,24 +177,46 @@ class MovieDetailFragment : BaseFragment() {
                 .makeVisible(!it)
         })
 
-        viewModel.isFinancialNegative.observe(viewLifecycleOwner, Observer {
-            binding.llMovieDetailContent.findViewById<AppCompatImageView>(R.id.ivProfitLoss).apply {
-                if (it) {
-                    loadImage(R.drawable.ic_loss)
-                    setColorFilter(
-                        ContextCompat.getColor(context, R.color.red),
-                        android.graphics.PorterDuff.Mode.SRC_IN
-                    )
-                } else {
-                    loadImage(R.drawable.ic_profit)
-                    setColorFilter(
-                        ContextCompat.getColor(context, R.color.green),
-                        android.graphics.PorterDuff.Mode.SRC_IN
-                    )
-                }
-            }
 
-        })
+        observe(viewModel.isFinancialNegative, ::handleNegativeFinancial)
+    }
+
+    private fun handleMovieDetailResponse(it: MovieDetailsModel) {
+        binding.movieDetailModel = it
+        val llReviewBox =
+            binding.llMovieDetailContent.findViewById<ConstraintLayout>(R.id.llReviewBox)
+        if (!it.movieReviews.isNullOrEmpty()) {
+            llReviewBox.findViewById<AppCompatTextView>(R.id.tvReview).text =
+                it.movieReviews.first().content
+
+            llReviewBox.findViewById<AppCompatImageView>(R.id.ivReviewerImage)
+                .loadImage(
+                    it.movieReviews.first().authorDetails?.avatarPath
+                )
+        }
+
+        mCastAdapter?.addAll(it.movieCast)
+        mProductionAdapter?.addAll(it.movieSynopsis?.productionCompanies ?: emptyList())
+        mSimilarMoviesAdapter?.addAll(it.similarMoviesResult)
+    }
+
+    private fun handleNegativeFinancial(isNegativeFinancial: Boolean) {
+        binding.llMovieDetailContent.findViewById<AppCompatImageView>(R.id.ivProfitLoss).apply {
+            if (isNegativeFinancial) {
+                loadImage(R.drawable.ic_loss)
+                setColorFilter(
+                    ContextCompat.getColor(context, R.color.red),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                )
+            } else {
+                loadImage(R.drawable.ic_profit)
+                setColorFilter(
+                    ContextCompat.getColor(context, R.color.green),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                )
+            }
+        }
+
     }
 
 }

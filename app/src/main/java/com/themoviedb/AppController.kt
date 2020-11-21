@@ -1,29 +1,42 @@
 package com.themoviedb
 
 import android.app.Application
+import android.content.Context
+import com.themoviedb.di.component.DaggerAppComponent
+import com.themoviedb.di.module.APIModule
 import com.themoviedb.utils.PreferenceUtils
 import com.themoviedb.utils.ToastUtils
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
 /**
  * @author Nitin Khanna
  * @date 19-11-2020
  */
 
-class AppController : Application() {
-    companion object {
+class AppController : Application(), HasAndroidInjector {
 
-        private var instance: AppController? = null
-        fun getInstance(): AppController {
-            return instance!!
-        }
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
+    companion object {
+        lateinit var context: Context
     }
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
-        PreferenceUtils.init(this)
-        ToastUtils.init(this)
+        context = this
+        PreferenceUtils.init(context)
+        ToastUtils.init(context)
+        DaggerAppComponent.builder()
+            .apiModule(APIModule())
+            .build()
+            .inject(this)
     }
 
-
+    override fun androidInjector(): AndroidInjector<Any> {
+        return androidInjector
+    }
 }

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.themoviedb.R
@@ -18,10 +17,12 @@ import com.themoviedb.utils.AppConstants
 import com.themoviedb.utils.PreferenceUtils
 import com.themoviedb.utils.extensions.debounce
 import com.themoviedb.utils.extensions.makeVisibleWithAnimation
+import javax.inject.Inject
 
 class IntroScreenFragment : BaseFragment(), View.OnClickListener {
 
-    private lateinit var viewModel: IntroScreenViewModel
+    @Inject
+    lateinit var viewModel: IntroScreenViewModel
     private lateinit var binding: IntroScreenFragmentBinding
     private lateinit var pagerAdapter: IntroScreeViewPagerAdapter
 
@@ -56,10 +57,6 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
 
     override fun onPageRefreshListener(data: Bundle?) {
         (mContext as MainActivity).setToolbar()
-    }
-
-    override fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(IntroScreenViewModel::class.java)
     }
 
     override fun initListeners() {

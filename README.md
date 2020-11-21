@@ -45,7 +45,7 @@
 ![Product Name Screen Shot](images/UI.png)
 
 ### Built With
-List of libraries and programming languages used in the project is-
+Libraries and programming languages used in the project are-
 * [Kotlin](https://kotlinlang.org/)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [Retrofit](https://square.github.io/retrofit/)

@@ -1,17 +1,12 @@
 package com.themoviedb.base
 
 import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : DaggerFragment() {
     var mContext: Context? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initViewModel()
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -21,6 +16,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
         this.mContext = context
     }
@@ -31,7 +27,6 @@ abstract class BaseFragment : Fragment() {
     }
 
     abstract fun onPageRefreshListener(data: Bundle? = null)
-    abstract fun initViewModel()
     abstract fun initListeners()
     open fun initObservers() {}
 

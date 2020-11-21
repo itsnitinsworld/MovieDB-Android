@@ -4,22 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.themoviedb.base.BaseViewModel
 import com.themoviedb.model.*
+import com.themoviedb.network.APIInterface
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.Function4
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
-class MovieDetailViewModel : BaseViewModel() {
+open class MovieDetailViewModel @Inject constructor(private var apiInterface: APIInterface) :
+    BaseViewModel() {
     private val _movieDetailsModel = MutableLiveData<MovieDetailsModel>()
     val movieDetailsMode: LiveData<MovieDetailsModel> = _movieDetailsModel
-
-    private val _isViewLoading = MutableLiveData<Boolean>()
-    val isViewLoading: LiveData<Boolean> = _isViewLoading
-
-    private val _onMessageError = MutableLiveData<String>()
-    val onMessageError: LiveData<String> = _onMessageError
 
     private val _isEmptyCastList = MutableLiveData<Boolean>()
     val isEmptyCastList: LiveData<Boolean> = _isEmptyCastList
@@ -91,8 +88,6 @@ class MovieDetailViewModel : BaseViewModel() {
             apiInterface.similarMovies(movieId)!!
                 .subscribeOn(Schedulers.io()),
             Function4<MovieSynopsisResponse?, MovieCreditResponse?, MovieReviewResponse?, MovieListResponse?, MovieDetailsModel?> { movieDetails, movieCreditResponse, movieReviewResponse, similarMoviesResponse ->
-
-
                 movieDetails?.productionCompanies =
                     (movieDetails?.productionCompanies?.filter { !it.logoPath.isNullOrEmpty() })
                         ?: emptyList()

@@ -1,18 +1,22 @@
 package com.themoviedb.base
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.themoviedb.network.APIClient
-import com.themoviedb.network.APIInterface
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 /**
  * @author- Nitin Khanna
  * @date - 20-11-2020
  */
-open class BaseViewModel : ViewModel() {
-    var compositeDisposable: CompositeDisposable? = null
+abstract class BaseViewModel : ViewModel() {
+    protected var compositeDisposable: CompositeDisposable? = null
 
-    val apiInterface = APIClient.getRetrofit().create(APIInterface::class.java)
+    protected val _isViewLoading = MutableLiveData<Boolean>()
+    val isViewLoading: LiveData<Boolean> = _isViewLoading
+
+    protected val _onMessageError = MutableLiveData<String>()
+    val onMessageError: LiveData<String> = _onMessageError
 
     override fun onCleared() {
         super.onCleared()

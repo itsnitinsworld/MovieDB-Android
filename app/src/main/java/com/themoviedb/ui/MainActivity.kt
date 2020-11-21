@@ -16,6 +16,7 @@ import com.themoviedb.base.BaseFragment
 import com.themoviedb.databinding.ActivityMainBinding
 import com.themoviedb.utils.AppConstants
 import com.themoviedb.utils.PreferenceUtils
+import dagger.android.AndroidInjection
 
 
 /**
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         // initializing navigation menu

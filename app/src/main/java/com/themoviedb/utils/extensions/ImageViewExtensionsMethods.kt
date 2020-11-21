@@ -21,7 +21,10 @@ fun ImageView.loadImage(image: String?) {
     if (image.isNullOrEmpty()) return
 
 
-
+    val imagePath: String =
+        if (!image.contains("http"))
+            AppConstants.MovieDB.IMAGE_PATH + image
+        else image
 
     val options: RequestOptions = RequestOptions()
         .centerCrop()
@@ -31,6 +34,6 @@ fun ImageView.loadImage(image: String?) {
         .priority(Priority.HIGH)
         .dontAnimate()
         .dontTransform()
-    Glide.with(this.context).load(AppConstants.MovieDB.IMAGE_PATH + image).apply(options).into(this)
+    Glide.with(this.context).load(imagePath).apply(options).into(this)
 
 }
