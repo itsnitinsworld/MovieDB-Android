@@ -34,6 +34,7 @@
     <string name="lbl_more">More</string>
     <string name="lbl_less">Less</string>
 
+    <string name="err_no_internet_connection">No Internet Connection!</string>
 
 
 </resources>

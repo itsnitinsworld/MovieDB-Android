@@ -16,7 +16,7 @@ import com.themoviedb.base.BaseFragment
 import com.themoviedb.databinding.ActivityMainBinding
 import com.themoviedb.utils.AppConstants
 import com.themoviedb.utils.PreferenceUtils
-import dagger.android.AndroidInjection
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
@@ -24,6 +24,7 @@ import dagger.android.AndroidInjection
  * @date 19-11-2020
  */
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListener {
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var binding: ActivityMainBinding
@@ -31,7 +32,6 @@ class MainActivity : AppCompatActivity(), AppBarConfiguration.OnNavigateUpListen
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         // initializing navigation menu

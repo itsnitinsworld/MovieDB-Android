@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,13 +30,13 @@ import com.themoviedb.utils.ToastUtils
 import com.themoviedb.utils.extensions.loadImage
 import com.themoviedb.utils.extensions.makeVisible
 import com.themoviedb.utils.extensions.observe
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MovieDetailFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModel: MovieDetailViewModel
+    private val viewModel: MovieDetailViewModel by viewModels()
 
     private lateinit var binding: MovieDetailFragmentBinding
     private var mCastAdapter: CastListAdapter? = null

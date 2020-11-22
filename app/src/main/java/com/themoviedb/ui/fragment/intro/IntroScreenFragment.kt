@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.themoviedb.R
 import com.themoviedb.adapter.IntroScreeViewPagerAdapter
 import com.themoviedb.base.BaseFragment
@@ -17,12 +18,13 @@ import com.themoviedb.utils.AppConstants
 import com.themoviedb.utils.PreferenceUtils
 import com.themoviedb.utils.extensions.debounce
 import com.themoviedb.utils.extensions.makeVisibleWithAnimation
-import javax.inject.Inject
+import com.themoviedb.utils.view.ZoomOutPageTransformer
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class IntroScreenFragment : BaseFragment(), View.OnClickListener {
 
-    @Inject
-    lateinit var viewModel: IntroScreenViewModel
+    private val viewModel: IntroScreenViewModel by viewModels()
     private lateinit var binding: IntroScreenFragmentBinding
     private lateinit var pagerAdapter: IntroScreeViewPagerAdapter
 
@@ -40,14 +42,14 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
         super.initObservers()
 
         viewModel.currentTab.debounce(100).observe(viewLifecycleOwner, Observer {
-            if (it + 1 == pagerAdapter.count) {
+            if (it + 1 == pagerAdapter.itemCount) {
                 binding.ivLeft.makeVisibleWithAnimation(isVisible = false)
                 binding.ivRight.makeVisibleWithAnimation(isVisible = false)
-                binding.btnGetStarted.makeVisibleWithAnimation(isVisible = it + 1 == pagerAdapter.count)
+                binding.btnGetStarted.makeVisibleWithAnimation(isVisible = it + 1 == pagerAdapter.itemCount)
                 return@Observer
             }
 
-            binding.ivRight.makeVisibleWithAnimation(isVisible = it + 1 != pagerAdapter.count)
+            binding.ivRight.makeVisibleWithAnimation(isVisible = it + 1 != pagerAdapter.itemCount)
             binding.ivLeft.makeVisibleWithAnimation(isVisible = it != 0)
             binding.btnGetStarted.makeVisibleWithAnimation(isVisible = false)
         })
@@ -61,7 +63,7 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
 
     override fun initListeners() {
         pagerAdapter =
-            IntroScreeViewPagerAdapter((mContext as MainActivity).supportFragmentManager)
+            IntroScreeViewPagerAdapter(requireActivity())
         pagerAdapter.addItems(mContext)
 
         binding.ivLeft.setOnClickListener(this)
@@ -69,23 +71,11 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
         binding.btnGetStarted.setOnClickListener(this)
 
 
-        binding.viewPager.addOnPageChangeListener(object :
-            ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                viewModel.currentTab.value = position
-
-            }
-
+        binding.viewPager.setPageTransformer(ZoomOutPageTransformer())
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                //
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                //no use
+                super.onPageSelected(position)
+                viewModel.currentTab.value = position
             }
         })
 
@@ -109,7 +99,7 @@ class IntroScreenFragment : BaseFragment(), View.OnClickListener {
 
             binding.ivRight -> {
                 var position = 0
-                if (binding.viewPager.currentItem + 1 < pagerAdapter.count) {
+                if (binding.viewPager.currentItem + 1 < pagerAdapter.itemCount) {
                     position =
                         binding.viewPager.currentItem + 1
                     binding.viewPager.currentItem = position

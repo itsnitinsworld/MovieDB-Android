@@ -11,10 +11,9 @@ import com.themoviedb.BuildConfig
 
 
 object PreferenceUtils {
-    private val TAG = PreferenceUtils::class.java.simpleName
-
     private var pref: SharedPreferences? = null
 
+    @Suppress("DEPRECATION")
     fun init(context: Context) {
         pref = if (pref == null) {
             context.getSharedPreferences(
@@ -58,10 +57,12 @@ object PreferenceUtils {
         editor.commit()
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> getPref(key: String?): T? {
-        return pref!!.all[key] as T?
+        return pref!!.all[key] as? T
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> getPref(key: String?, defValue: T): T {
         val returnValue = pref!!.all[key] as T?
         return returnValue ?: defValue

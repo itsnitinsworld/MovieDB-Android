@@ -1,6 +1,7 @@
 package com.themoviedb.utils.extensions
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -28,6 +29,6 @@ fun RecyclerView.validateNoDataView(llNoData: View?) {
 
 fun View.changeBackgroundColor(colorCode: Int) {
     val context = this.context
-    this.setBackgroundColor(context.resources.getColor(colorCode))
+    this.setBackgroundColor(ContextCompat.getColor(context, colorCode))
 
 }

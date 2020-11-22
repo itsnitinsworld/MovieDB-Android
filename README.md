@@ -12,12 +12,12 @@
   <p align="center">
     Millions of movies, TV shows and people to discover. Explore now.
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/itsnitinsworld/MovieDB-Android/blob/master/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://www.figma.com/file/yphEUcheCderJplkWjIh6C/Movie-DB?node-id=40%3A0">View Demo</a>
     ·
-    <a href="https://github.com/itsnitinsworld/MovieDB-Android/issues">Download APK</a>
+    <a href="https://drive.google.com/file/d/1BHVl38ya9MP2CF99slEo9tDiA648HJL-/view?usp=sharing">Download APK</a>
     ·
   </p>
 
@@ -49,7 +49,7 @@ Libraries and programming languages used in the project are-
 * [Kotlin](https://kotlinlang.org/)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [Retrofit](https://square.github.io/retrofit/)
-* [Dagger](https://github.com/google/dagger)
+* [Dagger-Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 
 
 

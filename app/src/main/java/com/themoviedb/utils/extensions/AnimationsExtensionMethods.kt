@@ -61,6 +61,7 @@ enum class SlideType {
     HIDE
 }
 
+@Suppress("DEPRECATION")
 fun View.slideAnimation(direction: SlideDirection, type: SlideType, duration: Long = 250) {
     val fromX: Float
     val toX: Float

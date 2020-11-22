@@ -2,10 +2,9 @@ package com.themoviedb.base
 
 import android.content.Context
 import android.os.Bundle
-import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
 
-abstract class BaseFragment : DaggerFragment() {
+abstract class BaseFragment : Fragment() {
     var mContext: Context? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -16,7 +15,6 @@ abstract class BaseFragment : DaggerFragment() {
     }
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
         super.onAttach(context)
         this.mContext = context
     }

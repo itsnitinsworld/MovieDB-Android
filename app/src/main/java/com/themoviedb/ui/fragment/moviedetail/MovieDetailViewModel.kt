@@ -1,19 +1,27 @@
 package com.themoviedb.ui.fragment.moviedetail
 
+import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.themoviedb.R
 import com.themoviedb.base.BaseViewModel
 import com.themoviedb.model.*
 import com.themoviedb.network.APIInterface
+import com.themoviedb.network.NetworkHelper
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.Function4
 import io.reactivex.rxjava3.schedulers.Schedulers
-import javax.inject.Inject
 
-open class MovieDetailViewModel @Inject constructor(private var apiInterface: APIInterface) :
+open class MovieDetailViewModel @ViewModelInject constructor(
+    @ApplicationContext private var context: Context,
+    private var apiInterface: APIInterface,
+    private var networkHelper: NetworkHelper
+) :
     BaseViewModel() {
     private val _movieDetailsModel = MutableLiveData<MovieDetailsModel>()
     val movieDetailsMode: LiveData<MovieDetailsModel> = _movieDetailsModel
@@ -37,6 +45,11 @@ open class MovieDetailViewModel @Inject constructor(private var apiInterface: AP
 
 
     fun getDetails(movieId: String) {
+
+        if (!networkHelper.isNetworkConnected()) {
+            _onMessageError.value = context.getString(R.string.err_no_internet_connection)
+            return
+        }
 
         _isViewLoading.value = true
         val observer: Observer<MovieDetailsModel?> = object :

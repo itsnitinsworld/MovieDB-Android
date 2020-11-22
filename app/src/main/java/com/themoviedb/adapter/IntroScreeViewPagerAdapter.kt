@@ -2,8 +2,8 @@ package com.themoviedb.adapter
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.themoviedb.R
 import com.themoviedb.ui.fragment.intro.IntroViewPagerFragment
 import com.themoviedb.ui.fragment.intro.model.IntroPagerModel
@@ -13,8 +13,8 @@ import com.themoviedb.ui.fragment.intro.model.IntroPagerModel
  * @date - 20-11-2020
  */
 
-class IntroScreeViewPagerAdapter(fm: FragmentManager?) :
-    FragmentPagerAdapter(fm!!) {
+class IntroScreeViewPagerAdapter(fm: FragmentActivity?) :
+    FragmentStateAdapter(fm!!) {
 
 
     fun addItems(context: Context?) {
@@ -48,11 +48,12 @@ class IntroScreeViewPagerAdapter(fm: FragmentManager?) :
         mFragmentList.add(IntroViewPagerFragment.newInstance(introPagerModel))
     }
 
-    override fun getItem(position: Int): Fragment {
-        return mFragmentList[position]
+
+    override fun getItemCount(): Int {
+        return mFragmentList.size
     }
 
-    override fun getCount(): Int {
-        return mFragmentList.size
+    override fun createFragment(position: Int): Fragment {
+        return mFragmentList.get(position)
     }
 }

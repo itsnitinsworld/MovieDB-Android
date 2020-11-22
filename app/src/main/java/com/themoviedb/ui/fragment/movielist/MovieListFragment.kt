@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,14 +17,14 @@ import com.themoviedb.databinding.MovieListFragmentBinding
 import com.themoviedb.model.MovieResults
 import com.themoviedb.ui.MainActivity
 import com.themoviedb.utils.extensions.makeVisible
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.movie_list_fragment.*
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class MovieListFragment : BaseFragment() {
     private lateinit var binding: MovieListFragmentBinding
 
-    @Inject
-    lateinit var viewModel: MovieListViewModel
+    private val viewModel: MovieListViewModel by viewModels()
 
     private lateinit var mAdapter: MoviesListAdapter
 
